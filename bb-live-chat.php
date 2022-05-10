@@ -34,3 +34,29 @@ if ( ! defined( 'PLUGIN_DIR_URL' ) ) {
 if ( ! defined( 'PLUGIN' ) ) {
     define( 'PLUGIN', plugin_basename( __FILE__ ) );
 }
+
+class BBLiveChat {
+
+    public $plugin_path;
+    public $plugin_url;
+    public $plugin;
+
+    function __construct() {
+        $this->plugin_path = PLUGIN_DIR_PATH;
+        $this->plugin_url = PLUGIN_DIR_URL;
+        $this->plugin = PLUGIN;
+    }
+
+    function register() {
+        add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
+    }
+
+    function enqueue() {
+        // enqueue styles and scripts.
+        wp_enqueue_style( 'bb-style', PLUGIN_DIR_URL . 'assets/css/style.css' );
+        wp_enqueue_script( 'bb-script', PLUGIN_DIR_URL . 'assets/js/script.js' );
+    }
+
+}
+$bbLiveChat = new BBLiveChat();
+$bbLiveChat->register();

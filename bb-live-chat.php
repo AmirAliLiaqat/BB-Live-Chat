@@ -53,6 +53,8 @@ class BBLiveChat {
         add_action( 'admin_menu', array( $this, 'add_admin_pages' ) );
 
         add_filter( "plugin_action_links_$this->plugin", array( $this, 'settings_link' ) );
+
+        add_filter( "the_content", array( $this, 'bb_live_chat_html' ) );
     }
 
     function enqueue() {
@@ -70,9 +72,21 @@ class BBLiveChat {
     }
 
     function settings_link( $links ) {
-        $settings_link = '<a href="admin.php?page=bb_live_chat">Settings</a>';
+        $settings_link = '<a href="admin.php?page=bb_live_chat">Settings</a>'. '<br>';
         array_push( $links, $settings_link );
         return $links;
+    }
+
+    function bb_live_chat_html( $content ) {
+        $bb_live_chat_div = '<div class="bb_live_chat_div">';
+        $bb_live_chat_link = '<a href="https://api.whatsapp.com/send?phone=923090886518" class="bb_live_chat_link"></a>';
+        $bb_live_chat_div_end = '</div>';
+
+        $content .= $bb_live_chat_div;
+        $content .= $bb_live_chat_link;
+        $content .= $bb_live_chat_div_end;
+
+        return $content;
     }
 
 }

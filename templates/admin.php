@@ -1,0 +1,1 @@
+<h1 style="background: #000; color: #fff; text-align:center; margin:20px; padding:20px;">Wellcome to ByteBunch Live Chat</h1>

@@ -37,30 +37,20 @@ if ( ! defined( 'PLUGIN' ) ) {
 
 class BBLiveChat {
 
-    public $plugin_path;
-    public $plugin_url;
-    public $plugin;
-
-    function __construct() {
-        $this->plugin_path = PLUGIN_DIR_PATH;
-        $this->plugin_url = PLUGIN_DIR_URL;
-        $this->plugin = PLUGIN;
-    }
-
     function register() {
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
 
         add_action( 'admin_menu', array( $this, 'add_admin_pages' ) );
 
-        add_filter( "plugin_action_links_$this->plugin", array( $this, 'settings_link' ) );
+        add_filter( "plugin_action_links_" . PLUGIN, array( $this, 'settings_link' ) );
 
         add_filter( "the_content", array( $this, 'bb_live_chat_html' ) );
     }
 
     function enqueue() {
         // enqueue styles and scripts.
-        wp_enqueue_style( 'bb-style', $this->plugin_url . 'assets/css/style.css' );
-        wp_enqueue_script( 'bb-script', $this->plugin_url . 'assets/js/script.js' );
+        wp_enqueue_style( 'bb-style', PLUGIN_DIR_URL . 'assets/css/style.css' );
+        wp_enqueue_script( 'bb-script', PLUGIN_DIR_URL . 'assets/js/script.js' );
     }
 
     function add_admin_pages() {
@@ -68,7 +58,7 @@ class BBLiveChat {
     }
 
     function admin_index() {
-        require_once $this->plugin_path . 'templates/admin.php';
+        require_once PLUGIN_DIR_PATH . 'templates/admin.php';
     }
 
     function settings_link( $links ) {

@@ -51,6 +51,8 @@ class BBLiveChat {
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
 
         add_action( 'admin_menu', array( $this, 'add_admin_pages' ) );
+
+        add_filter( "plugin_action_links_$this->plugin", array( $this, 'settings_link' ) );
     }
 
     function enqueue() {
@@ -65,6 +67,12 @@ class BBLiveChat {
 
     function admin_index() {
         require_once $this->plugin_path . 'templates/admin.php';
+    }
+
+    function settings_link( $links ) {
+        $settings_link = '<a href="admin.php?page=bb_live_chat">Settings</a>';
+        array_push( $links, $settings_link );
+        return $links;
     }
 
 }

@@ -49,12 +49,22 @@ class BBLiveChat {
 
     function register() {
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
+
+        add_action( 'admin_menu', array( $this, 'add_admin_pages' ) );
     }
 
     function enqueue() {
         // enqueue styles and scripts.
-        wp_enqueue_style( 'bb-style', PLUGIN_DIR_URL . 'assets/css/style.css' );
-        wp_enqueue_script( 'bb-script', PLUGIN_DIR_URL . 'assets/js/script.js' );
+        wp_enqueue_style( 'bb-style', $this->plugin_url . 'assets/css/style.css' );
+        wp_enqueue_script( 'bb-script', $this->plugin_url . 'assets/js/script.js' );
+    }
+
+    function add_admin_pages() {
+        add_menu_page( 'ByteBunch Live Chat','BB Live Chat', 'manage_options', 'bb_live_chat', array( $this, 'admin_index' ), 'dashicons-store', 110  );
+    }
+
+    function admin_index() {
+        require_once $this->plugin_path . 'templates/admin.php';
     }
 
 }

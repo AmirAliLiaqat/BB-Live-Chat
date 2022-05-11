@@ -55,10 +55,25 @@ class BBLiveChat {
 
     function add_admin_pages() {
         add_menu_page( 'ByteBunch Live Chat','BB Live Chat', 'manage_options', 'bb_live_chat', array( $this, 'admin_index' ), 'dashicons-store', 110  );
+        add_submenu_page( 'bb_live_chat', 'Live Chat','Live Chat', 'manage_options', 'live_chat', array( $this, 'live_admin_index' ), 110  );
+        add_submenu_page( 'bb_live_chat', 'Email Log','Email Log', 'manage_options', 'email_log', array( $this, 'email_admin_index' ), 110  );
+        add_submenu_page( 'bb_live_chat', 'Settings','Settings', 'manage_options', 'plugin_settings', array( $this, 'settings_admin_index' ), 110  );
     }
 
     function admin_index() {
         require_once PLUGIN_DIR_PATH . 'templates/admin.php';
+    }
+
+    function live_admin_index() {
+       echo "<h1>Live Chat</h1>";
+    }
+
+    function settings_admin_index() {
+       echo "<h1>Settings</h1>";
+    }
+
+    function email_admin_index() {
+       echo "<h1>Email Log</h1>";
     }
 
     function settings_link( $links ) {

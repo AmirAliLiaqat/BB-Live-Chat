@@ -84,7 +84,7 @@ class BBLiveChat {
 
     function bb_live_chat_html( $content ) {
         $bb_live_chat_div = '<div class="bb_live_chat_div">';
-        $bb_live_chat_link = '<a href="https://api.whatsapp.com/send?phone=923090886518" class="bb_live_chat_link"></a>';
+        $bb_live_chat_link = '<a href="https://web.whatsapp.com/send?phone=923090886518" class="bb_live_chat_link"></a>';
         $bb_live_chat_div_end = '</div>';
 
         $content .= $bb_live_chat_div;

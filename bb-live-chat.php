@@ -37,6 +37,7 @@ if ( ! defined( 'PLUGIN' ) ) {
 
 class BBLiveChat {
 
+    // function for register all actions and filters.
     function register() {
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
 
@@ -45,46 +46,48 @@ class BBLiveChat {
         add_filter( "plugin_action_links_" . PLUGIN, array( $this, 'settings_link' ) );
 
         add_filter( "the_content", array( $this, 'bb_live_chat_html' ) );
+
+        add_action( "admin_init", array( $this, 'bb_register_settings' ) );
     }
 
+    // enqueue styles and scripts
     function enqueue() {
-        // enqueue styles and scripts.
         wp_enqueue_style( 'bb-style', PLUGIN_DIR_URL . 'assets/css/style.css' );
         wp_enqueue_script( 'bb-script', PLUGIN_DIR_URL . 'assets/js/script.js' );
     }
 
+    // function for adding menu and sub menu pages
     function add_admin_pages() {
         add_menu_page( 'ByteBunch Live Chat','BB Live Chat', 'manage_options', 'bb_live_chat', array( $this, 'admin_index' ), 'dashicons-store', 110  );
         add_submenu_page( 'bb_live_chat', 'Live Chat','Live Chat', 'manage_options', 'live_chat', array( $this, 'live_admin_index' ), 110  );
         add_submenu_page( 'bb_live_chat', 'Email Log','Email Log', 'manage_options', 'email_log', array( $this, 'email_admin_index' ), 110  );
-        add_submenu_page( 'bb_live_chat', 'Settings','Settings', 'manage_options', 'plugin_settings', array( $this, 'settings_admin_index' ), 110  );
     }
 
+    // callback function for menu page.
     function admin_index() {
         require_once PLUGIN_DIR_PATH . 'templates/admin.php';
     }
 
+    // callback function for sub menu page 1.
     function live_admin_index() {
        echo "<h1>Live Chat</h1>";
     }
 
+    // callback function for sub menu page 2.
     function settings_admin_index() {
        echo "<h1>Settings</h1>";
     }
 
+    // callback function for sub menu page 2.
     function email_admin_index() {
        echo "<h1>Email Log</h1>";
     }
 
-    function settings_link( $links ) {
-        $settings_link = '<a href="admin.php?page=bb_live_chat">Settings</a>'. '<br>';
-        array_push( $links, $settings_link );
-        return $links;
-    }
-
+    // function for writting plugin html
     function bb_live_chat_html( $content ) {
+        $chat_button_number = get_option( 'bb_chat_label' );
         $bb_live_chat_div = '<div class="bb_live_chat_div">';
-        $bb_live_chat_link = '<a href="https://web.whatsapp.com/send?phone=923090886518" class="bb_live_chat_link"></a>';
+        $bb_live_chat_link = '<a href="https://web.whatsapp.com/send?phone='.$chat_button_number.'" class="bb_live_chat_link"></a>';
         $bb_live_chat_div_end = '</div>';
 
         $content .= $bb_live_chat_div;
@@ -92,6 +95,33 @@ class BBLiveChat {
         $content .= $bb_live_chat_div_end;
 
         return $content;
+    }
+
+    // Register settings, sections & fields.
+    function bb_register_settings() {
+
+        register_setting( 'bb_register_setting', 'bb_chat_label' );
+
+        add_settings_section( 
+            'bb_register_setting_section', 
+            'Settings Manager', 
+            function () {
+                echo '<p>Enter the phone number in the field.</p>';
+            }, 
+            'bb_register_setting' 
+        );
+
+        add_settings_field( 
+            'bb_register_setting_field', 
+            'Enter Phone Number', 
+            function () {
+                $setting = get_option('bb_chat_label');
+                echo '<input type="text" name="bb_chat_label" value="'.$setting.'">';
+            }, 
+            'bb_register_setting', 
+            'bb_register_setting_section' 
+        );
+
     }
 
 }

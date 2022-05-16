@@ -56,6 +56,13 @@ class BBLiveChat {
         wp_enqueue_script( 'bb-script', PLUGIN_DIR_URL . 'assets/js/script.js' );
     }
 
+    // function for adding settings link in plugin.
+    function settings_link( $links ) {
+        $settings_link = '<a href="admin.php?page=bb_live_chat">Settings</a>';
+        array_push( $links, $settings_link );
+        return $links;
+    }
+
     // function for adding menu and sub menu pages
     function add_admin_pages() {
         add_menu_page( 'ByteBunch Live Chat','BB Live Chat', 'manage_options', 'bb_live_chat', array( $this, 'admin_index' ), 'dashicons-store', 110  );
@@ -71,11 +78,6 @@ class BBLiveChat {
     // callback function for sub menu page 1.
     function live_admin_index() {
        echo "<h1>Live Chat</h1>";
-    }
-
-    // callback function for sub menu page 2.
-    function settings_admin_index() {
-       echo "<h1>Settings</h1>";
     }
 
     // callback function for sub menu page 2.

@@ -1,15 +1,15 @@
 <?php
 
 /*
-Plugin Name:       ByteBunch Live Chat
-Plugin URI:          https://bytebunch.com/plugin
-Description:        This is wordpress plugin which is created for the wordpress site to live chat with admin and other staff members.
-Version:               1.0.0
+Plugin Name:       BB Live Chat
+Plugin URI:        https://amir.bytebunch.com/plugins
+Description:       This is wordpress plugin which is created for the wordpress site to live chat with admin and other staff members.
+Version:           1.0.0
 Requires at least: 5.2
 Requires PHP:      8.1.2
-Author:               ByteBunch
-Author URI:        https://bytebunch.com
-License:               GPL v2 or later
+Author:            Byte Ki Duniya
+Author URI:        https://amir.bytebunch.com
+License:           GPL v2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain:       bb_live_chat
 Domain Path:       /languages
@@ -65,24 +65,12 @@ class BBLiveChat {
 
     // function for adding menu and sub menu pages
     function add_admin_pages() {
-        add_menu_page( 'ByteBunch Live Chat','BB Live Chat', 'manage_options', 'bb_live_chat', array( $this, 'admin_index' ), 'dashicons-store', 110  );
-        add_submenu_page( 'bb_live_chat', 'Live Chat','Live Chat', 'manage_options', 'live_chat', array( $this, 'live_admin_index' ), 110  );
-        add_submenu_page( 'bb_live_chat', 'Email Log','Email Log', 'manage_options', 'email_log', array( $this, 'email_admin_index' ), 110  );
+        add_menu_page( 'ByteBunch Live Chat','BB Live Chat', 'manage_options', 'bb_live_chat', array( $this, 'admin_index' ), PLUGIN_DIR_URL . 'assets/img/icon.png', 110  );
     }
 
     // callback function for menu page.
     function admin_index() {
         require_once PLUGIN_DIR_PATH . 'templates/admin.php';
-    }
-
-    // callback function for sub menu page 1.
-    function live_admin_index() {
-       echo "<h1>Live Chat</h1>";
-    }
-
-    // callback function for sub menu page 2.
-    function email_admin_index() {
-       echo "<h1>Email Log</h1>";
     }
 
     // function for writting plugin html

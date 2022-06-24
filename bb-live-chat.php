@@ -75,9 +75,10 @@ class BBLiveChat {
 
     // function for writting plugin html
     function bb_live_chat_html( $content ) {
-        $chat_button_number = get_option( 'bb_chat_label' );
+        $link = get_option( 'bb_chat_link' );
+        $number = get_option( 'bb_chat_label' );
         $bb_live_chat_div = '<div class="bb_live_chat_div">';
-        $bb_live_chat_link = '<a href="https://web.whatsapp.com/send?phone='.$chat_button_number.'" class="bb_live_chat_link"></a>';
+        $bb_live_chat_link = '<a href="'.$link.$number.'" class="bb_live_chat_link"></a>';
         $bb_live_chat_div_end = '</div>';
 
         $content .= $bb_live_chat_div;
@@ -90,26 +91,32 @@ class BBLiveChat {
     // Register settings, sections & fields.
     function bb_register_settings() {
 
-        register_setting( 'bb_register_setting', 'bb_chat_label' );
 
         add_settings_section( 
-            'bb_register_setting_section', 
-            'Settings Manager', 
+            'bb_register_setting_section', 'Settings Manager', 
             function () {
                 echo '<p>Enter the phone number in the field.</p>';
-            }, 
-            'bb_register_setting' 
+            }, 'bb_register_setting' 
         );
 
+        register_setting( 'bb_register_setting', 'bb_chat_link' );
+
         add_settings_field( 
-            'bb_register_setting_field', 
-            'Enter Phone Number', 
+            'bb_chat_field', 'Chat Link', 
+            function () {
+                $link = get_option('bb_chat_link');
+                echo '<input type="text" name="bb_chat_link" value="'.$link.'">';
+            }, 'bb_register_setting', 'bb_register_setting_section' 
+        );
+
+        register_setting( 'bb_register_setting', 'bb_chat_label' );
+
+        add_settings_field( 
+            'bb_link_field', 'Phone Number', 
             function () {
                 $setting = get_option('bb_chat_label');
                 echo '<input type="text" name="bb_chat_label" value="'.$setting.'">';
-            }, 
-            'bb_register_setting', 
-            'bb_register_setting_section' 
+            }, 'bb_register_setting', 'bb_register_setting_section' 
         );
 
     }
